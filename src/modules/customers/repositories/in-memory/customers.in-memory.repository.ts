@@ -10,32 +10,41 @@ export class CustomersInMemoryRepository implements CustomersRepository {
   private database: Customer[] = [];
 
   create(data: CreateCustomerDto): Customer | Promise<Customer> {
-    const newCustomer = new Customer()
-    Object.assign(newCustomer, { ...data })
-    this.database.push(newCustomer)
+    const newCustomer = new Customer();
+    Object.assign(newCustomer, { ...data });
+    this.database.push(newCustomer);
     return plainToInstance(Customer, newCustomer);
   }
   findAll(): Customer[] | Promise<Customer[]> {
     return plainToInstance(Customer, this.database);
   }
   findOne(customer_id: string): Customer | Promise<Customer> {
-    const customer = this.database.find(customer => customer.id === customer_id)
+    const customer = this.database.find(
+      (customer) => customer.id === customer_id,
+    );
     return plainToInstance(Customer, customer);
   }
   findEmail(email: string): Customer | Promise<Customer> {
-    const customer = this.database.find(customer => customer.email === email)
+    const customer = this.database.find((customer) => customer.email === email);
     return plainToInstance(Customer, customer);
   }
-  update(customer_id: string, data: UpdateCustomerDto): Customer | Promise<Customer> {
-    const customerIndex = this.database.findIndex(customer => customer.id === customer_id)
+  update(
+    customer_id: string,
+    data: UpdateCustomerDto,
+  ): Customer | Promise<Customer> {
+    const customerIndex = this.database.findIndex(
+      (customer) => customer.id === customer_id,
+    );
     this.database[customerIndex] = {
       ...this.database[customerIndex],
-      ...data
-    }
+      ...data,
+    };
     return plainToInstance(Customer, this.database[customerIndex]);
   }
   delete(customer_id: string): void | Promise<void> {
-    const customerIndex = this.database.findIndex(customer => customer.id === customer_id)
-    this.database.splice(customerIndex, 1)
+    const customerIndex = this.database.findIndex(
+      (customer) => customer.id === customer_id,
+    );
+    this.database.splice(customerIndex, 1);
   }
 }
