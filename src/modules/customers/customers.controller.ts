@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -27,7 +28,7 @@ export class CustomersController {
 
   @Get(':customer_id')
   findOne(@Param('customer_id') customer_id: string) {
-    return this.customersService.findOne(+customer_id);
+    return this.customersService.findOne(customer_id);
   }
 
   @Patch(':customer_id')
@@ -35,11 +36,12 @@ export class CustomersController {
     @Param('customer_id') customer_id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.customersService.update(+customer_id, updateCustomerDto);
+    return this.customersService.update(customer_id, updateCustomerDto);
   }
 
+  @HttpCode(204)
   @Delete(':customer_id')
   remove(@Param('customer_id') customer_id: string) {
-    return this.customersService.remove(+customer_id);
+    return this.customersService.remove(customer_id);
   }
 }
