@@ -2,6 +2,7 @@ import { CreateCustomerDto } from '../../dto/create-customer.dto';
 import { UpdateCustomerDto } from '../../dto/update-customer.dto';
 import { Customer } from '../../entities/customer.entity';
 import { CustomersRepository } from '../customers.repository';
+import { plainToInstance } from 'class-transformer';
 
 export class CustomersInMemoryRepository implements CustomersRepository {
   private database: Customer[] = [];
@@ -10,14 +11,14 @@ export class CustomersInMemoryRepository implements CustomersRepository {
     const newCustomer = new Customer()
     Object.assign(newCustomer, { ...data })
     this.database.push(newCustomer)
-    return newCustomer;
+    return plainToInstance(Customer, newCustomer);
   }
   findAll(): Customer[] | Promise<Customer[]> {
-    return this.database;
+    return plainToInstance(Customer, this.database);
   }
   findOne(customer_id: string): Customer | Promise<Customer> {
     const customer = this.database.find(customer => customer.id === customer_id)
-    return customer;
+    return plainToInstance(Customer, customer);
   }
   update(customer_id: string, data: UpdateCustomerDto): Customer | Promise<Customer> {
     const customerIndex = this.database.findIndex(customer => customer.id === customer_id)
@@ -25,7 +26,7 @@ export class CustomersInMemoryRepository implements CustomersRepository {
       ...this.database[customerIndex],
       ...data
     }
-    return this.database[customerIndex];
+    return plainToInstance(Customer, this.database[customerIndex]);
   }
   delete(customer_id: string): void | Promise<void> {
     const customerIndex = this.database.findIndex(customer => customer.id === customer_id)
