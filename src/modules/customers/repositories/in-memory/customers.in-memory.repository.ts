@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from '../../dto/create-customer.dto';
 import { UpdateCustomerDto } from '../../dto/update-customer.dto';
 import { Customer } from '../../entities/customer.entity';
 import { CustomersRepository } from '../customers.repository';
 import { plainToInstance } from 'class-transformer';
 
+@Injectable()
 export class CustomersInMemoryRepository implements CustomersRepository {
   private database: Customer[] = [];
 
@@ -18,6 +20,10 @@ export class CustomersInMemoryRepository implements CustomersRepository {
   }
   findOne(customer_id: string): Customer | Promise<Customer> {
     const customer = this.database.find(customer => customer.id === customer_id)
+    return plainToInstance(Customer, customer);
+  }
+  findEmail(email: string): Customer | Promise<Customer> {
+    const customer = this.database.find(customer => customer.email === email)
     return plainToInstance(Customer, customer);
   }
   update(customer_id: string, data: UpdateCustomerDto): Customer | Promise<Customer> {
