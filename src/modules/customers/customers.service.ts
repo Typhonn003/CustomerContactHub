@@ -35,6 +35,11 @@ export class CustomersService {
     return customer;
   }
 
+  async findEmail(email: string) {
+    const customer = await this.customersRepository.findEmail(email);
+    return customer;
+  }
+
   async update(customer_id: string, updateCustomerDto: UpdateCustomerDto) {
     const findUser = await this.customersRepository.findOne(customer_id);
     if (!findUser) {

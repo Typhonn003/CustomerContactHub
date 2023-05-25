@@ -42,7 +42,7 @@ export class CustomersPrismaRepository implements CustomersRepository {
     const customer = await this.prisma.customer.findUnique({
       where: { email },
     });
-    return plainToInstance(Customer, customer);
+    return customer;
   }
 
   async update(
