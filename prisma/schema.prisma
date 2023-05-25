@@ -17,7 +17,7 @@ model Customer {
   password         String    @db.VarChar(120)
   phoneNumber      String    @db.VarChar(20)
   registrationDate DateTime
-  contact          Contact[]
+  contacts         Contact[]
 
   @@map("customers")
 }
