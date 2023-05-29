@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   HttpCode,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('customers')
 export class CustomersController {
@@ -24,6 +27,12 @@ export class CustomersController {
   @Get()
   findAll() {
     return this.customersService.findAll();
+  }
+
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  getProfile(@Request() req) {
+    return this.customersService.getProfile(req.user.id);
   }
 
   @Get(':customer_id')
