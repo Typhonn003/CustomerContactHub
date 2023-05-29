@@ -28,6 +28,12 @@ export class CustomersInMemoryRepository implements CustomersRepository {
     const customer = this.database.find((customer) => customer.email === email);
     return customer;
   }
+  findProfile(customer_id: string): Customer | Promise<Customer> {
+    const customer = this.database.find(
+      (customer) => customer.id === customer_id,
+    );
+    return plainToInstance(Customer, customer);
+  }
   update(
     customer_id: string,
     data: UpdateCustomerDto,
