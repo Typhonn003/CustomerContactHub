@@ -40,6 +40,11 @@ export class CustomersService {
     return customer;
   }
 
+  async getProfile(customer_id: string) {
+    const customer = await this.customersRepository.findOne(customer_id);
+    return customer;
+  }
+
   async update(customer_id: string, updateCustomerDto: UpdateCustomerDto) {
     const findUser = await this.customersRepository.findOne(customer_id);
     if (!findUser) {
