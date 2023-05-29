@@ -45,6 +45,16 @@ export class CustomersPrismaRepository implements CustomersRepository {
     return customer;
   }
 
+  async findProfile(customer_id: string): Promise<Customer> {
+    const customer = await this.prisma.customer.findUnique({
+      where: { id: customer_id },
+      include: {
+        contacts: true,
+      },
+    });
+    return plainToInstance(Customer, customer);
+  }
+
   async update(
     customer_id: string,
     data: UpdateCustomerDto,

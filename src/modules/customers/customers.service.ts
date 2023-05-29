@@ -41,7 +41,7 @@ export class CustomersService {
   }
 
   async getProfile(customer_id: string) {
-    const customer = await this.customersRepository.findOne(customer_id);
+    const customer = await this.customersRepository.findProfile(customer_id);
     return customer;
   }
 
