@@ -25,11 +25,13 @@ export class ContactsController {
   }
 
   @Get()
-  findAll() {
-    return this.contactsService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Request() req) {
+    return this.contactsService.findAll(req.user.id);
   }
 
   @Get(':contact_id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('contact_id') contact_id: string) {
     return this.contactsService.findOne(contact_id);
   }
@@ -39,13 +41,18 @@ export class ContactsController {
   update(
     @Param('contact_id') contact_id: string,
     @Body() updateContactDto: UpdateContactDto,
+    @Request() req,
   ) {
-    return this.contactsService.update(contact_id, updateContactDto);
+    return this.contactsService.update(
+      contact_id,
+      updateContactDto,
+      req.user.id,
+    );
   }
 
   @Delete(':contact_id')
   @UseGuards(JwtAuthGuard)
-  remove(@Param('contact_id') contact_id: string) {
-    return this.contactsService.remove(contact_id);
+  remove(@Param('contact_id') contact_id: string, @Request() req) {
+    return this.contactsService.remove(contact_id, req.user.id);
   }
 }

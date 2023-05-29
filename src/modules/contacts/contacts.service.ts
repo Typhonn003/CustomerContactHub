@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
@@ -18,13 +19,16 @@ export class ContactsService {
     if (findUser) {
       throw new ConflictException('Contact already exists');
     }
-    const contact = await this.contactsRepository.create(createContactDto, customerId);
+    const contact = await this.contactsRepository.create(
+      createContactDto,
+      customerId,
+    );
     return contact;
   }
 
-  async findAll() {
-    const contact = await this.contactsRepository.findAll();
-    return contact;
+  async findAll(customerId: string) {
+    const contacts = await this.contactsRepository.findAll(customerId);
+    return contacts;
   }
 
   async findOne(contact_id: string) {
@@ -40,10 +44,26 @@ export class ContactsService {
     return customer;
   }
 
-  async update(contact_id: string, updateContactDto: UpdateContactDto) {
+  async isOwner(contactId: string, customerId: string): Promise<boolean> {
+    const contact = await this.contactsRepository.findOne(contactId);
+    if (contact.customerId === customerId) {
+      return true;
+    }
+    return false;
+  }
+
+  async update(
+    contact_id: string,
+    updateContactDto: UpdateContactDto,
+    customerId: string,
+  ) {
     const findUser = await this.contactsRepository.findOne(contact_id);
     if (!findUser) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Contact not found');
+    }
+    const isOwner = await this.isOwner(contact_id, customerId);
+    if (!isOwner) {
+      throw new UnauthorizedException('You are not the owner of this contact');
     }
     if (updateContactDto.email && updateContactDto.email !== findUser.email) {
       const findEmail = await this.contactsRepository.findEmail(
@@ -60,10 +80,14 @@ export class ContactsService {
     return customer;
   }
 
-  async remove(contact_id: string) {
+  async remove(contact_id: string, customerId: string) {
     const findUser = await this.contactsRepository.findOne(contact_id);
     if (!findUser) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Contact not found');
+    }
+    const isOwner = await this.isOwner(contact_id, customerId);
+    if (!isOwner) {
+      throw new UnauthorizedException('You are not the owner of this contact');
     }
     await this.contactsRepository.delete(contact_id);
   }
