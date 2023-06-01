@@ -27,6 +27,7 @@ Antes de tudo, certifique-se de criar um database com PostgreSQL utilizando o no
 Dentro do diretorio do projeto, renomeie o arquivo ".env.example" para ".env", em seguida abra o arquivo ".env" e configure os campos da "DATABASE_URL" com seus dados do PostgreSQL, por fim escolha uma "SECRET_KEY".
 
 Exemplo de como deve ficar:
+
 ```bash
 DATABASE_URL="postgresql://MeuUsuario:MinhaSenha@localhost:5432/NomeDoDatabase?schema=public"
 SECRET_KEY="HubLinkup"
@@ -58,87 +59,98 @@ Caso queira encerrar o servidor, aperte as teclas CTRL+C no terminal.
 
 # Documentação
 
-A API conta com dois tipos de ENDSPOINTS, rota de acesso livre e rota de acesso autenticado e dono do conteúdo
+<h2 align=center>CRUD de Usuário</h2>
 
 ## Cadastro de usuário
+
 `POST /customers - CORPO DA REQUISIÇÃO`
+
 ```json
 {
-	"fullName": "User Named One",
-	"email": "one@mail.com",
-	"password": "12345678",
-	"phoneNumber": "(21) 90000-0000"
+  "fullName": "User Named One",
+  "email": "one@mail.com",
+  "password": "12345678",
+  "phoneNumber": "(21) 90000-0000"
 }
 ```
 
+Chaves extras não serão validadas pelo sistema.
+
 `POST /customers - FORMATO DA RESPOSTA - STATUS 201`
+
 ```json
 {
-	"id": "99761784-5e9f-4762-ab2b-72477705d159",
-	"registrationDate": "2023-06-01T03:00:00.000Z",
-	"fullName": "User Named One",
-	"email": "one@mail.com",
-	"phoneNumber": "(21) 90000-0000"
+  "id": "99761784-5e9f-4762-ab2b-72477705d159",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "fullName": "User Named One",
+  "email": "one@mail.com",
+  "phoneNumber": "(21) 90000-0000"
 }
 ```
+
 ## Possíveis erros
 
 Email já cadastrado:
 
 `POST /customers - FORMATO DA RESPOSTA - STATUS 409`
+
 ```json
 {
-	"statusCode": 409,
-	"message": "User already exists",
-	"error": "Conflict"
+  "statusCode": 409,
+  "message": "User already exists",
+  "error": "Conflict"
 }
 ```
 
 Campo obrigatório faltando (faltando o email no exemplo):
 
 `POST /customers - FORMATO DA RESPOSTA - STATUS 400`
+
 ```json
 {
-	"statusCode": 400,
-	"message": [
-		"email should not be empty",
-		"email must be an email"
-	],
-	"error": "Bad Request"
+  "statusCode": 400,
+  "message": ["email should not be empty", "email must be an email"],
+  "error": "Bad Request"
 }
 ```
 
 ## Login de usuário
+
 `POST /login - CORPO DA REQUISIÇÃO`
+
 ```json
 {
-	"email": "one@mail.com",
-	"password": "12345678"
+  "email": "one@mail.com",
+  "password": "12345678"
 }
 ```
 
 `POST /login - FORMATO DA RESPOSTA - STATUS 200`
+
 ```json
 {
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9uZUBtYWlsLmNvbSIsImlhdCI6MTY4NTY1NDI5MywiZXhwIjoxNjg1NjU3ODkzLCJzdWIiOiI5OTc2MTc4NC01ZTlmLTQ3NjItYWIyYi03MjQ3NzcwNWQxNTkifQ.ccG3Qsg_q4o1nVOt5BMGkln0yrf--XehO8_WwSM80uc"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9uZUBtYWlsLmNvbSIsImlhdCI6MTY4NTY1NDI5MywiZXhwIjoxNjg1NjU3ODkzLCJzdWIiOiI5OTc2MTc4NC01ZTlmLTQ3NjItYWIyYi03MjQ3NzcwNWQxNTkifQ.ccG3Qsg_q4o1nVOt5BMGkln0yrf--XehO8_WwSM80uc"
 }
 ```
 
 ## Possíveis erros
+
 Email ou senha inválida:
 
 `POST /login - FORMATO DA RESPOSTA - STATUS 401`
+
 ```json
 {
-	"statusCode": 401,
-	"message": "Invalid email or password",
-	"error": "Unauthorized"
+  "statusCode": 401,
+  "message": "Invalid email or password",
+  "error": "Unauthorized"
 }
 ```
 
 ## Buscar todos os usuários
 
 `GET /customers - FORMATO DA RESPOSTA - STATUS 200`
+
 ```json
 [
 	{
@@ -160,20 +172,23 @@ Email ou senha inválida:
 ```
 
 ## Buscar um único usuário
+
 `GET /customers/ID - PARÂMETRO DA REQUISIÇÃO`
+
 ```json
 É necessario enviar um ID de usuário válido como parâmetro da requisição.
 Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ```
 
 `GET /customers/ID - FORMATO DA RESPOSTA - STATUS 200`
+
 ```json
 {
-	"id": "99761784-5e9f-4762-ab2b-72477705d159",
-	"registrationDate": "2023-06-01T03:00:00.000Z",
-	"fullName": "User Named One",
-	"email": "one@mail.com",
-	"phoneNumber": "(21) 90000-0000"
+  "id": "99761784-5e9f-4762-ab2b-72477705d159",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "fullName": "User Named One",
+  "email": "one@mail.com",
+  "phoneNumber": "(21) 90000-0000"
 }
 ```
 
@@ -181,12 +196,13 @@ Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 
 ID inválido:
 
-`POST /customers - FORMATO DA RESPOSTA - STATUS 404`
+`POST /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+
 ```json
 {
-	"statusCode": 404,
-	"message": "User not found",
-	"error": "Not Found"
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
 }
 ```
 
@@ -202,46 +218,52 @@ Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o s
 
 ```json
 {
-	"statusCode": 401,
-	"message": "Unauthorized"
+  "statusCode": 401,
+  "message": "Unauthorized"
 }
 ```
 
 ## Buscar perfil do usuário logado
+
 `GET /customers/profile - FORMATO DA RESPOSTA - STATUS 200`
+
 ```json
 {
-	"id": "be2da69c-4ce2-42d0-b8b3-8b374dd304d8",
-	"registrationDate": "2023-06-01T03:00:00.000Z",
-	"fullName": "User Named One",
-	"email": "one@mail.com",
-	"phoneNumber": "(21) 90000-0000",
-	"contacts": []
+  "id": "be2da69c-4ce2-42d0-b8b3-8b374dd304d8",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "fullName": "User Named One",
+  "email": "one@mail.com",
+  "phoneNumber": "(21) 90000-0000",
+  "contacts": []
 }
 ```
 
 ## Editar usuário
+
 `PATCH /customers/ID - PARÂMETRO DA REQUISIÇÃO E CORPO DA REQUISIÇÃO`
+
 ```json
 É necessario enviar um ID de usuário válido como parâmetro da requisição.
 Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ```
+
 ```json
 {
-	"fullName": "Just One"
-	// Pode ser enviado quantos campos quise
-	// Tem que ser enviado ao menos um dos campos
+  "fullName": "Just One"
+  // Pode ser enviado quantos campos quiser
+  // Tem que ser enviado ao menos um dos campos
 }
 ```
 
 `PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 200`
+
 ```json
 {
-	"id": "99761784-5e9f-4762-ab2b-72477705d159",
-	"registrationDate": "2023-06-01T03:00:00.000Z",
-	"fullName": "Just One",
-	"email": "one@mail.com",
-	"phoneNumber": "(21) 90000-0000"
+  "id": "99761784-5e9f-4762-ab2b-72477705d159",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "fullName": "Just One",
+  "email": "one@mail.com",
+  "phoneNumber": "(21) 90000-0000"
 }
 ```
 
@@ -250,44 +272,50 @@ Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ID inválido:
 
 `PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+
 ```json
 {
-	"statusCode": 404,
-	"message": "User not found",
-	"error": "Not Found"
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
 }
 ```
 
 Conteúdo de outro usuário:
 
 `PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 401`
+
 ```json
 {
-	"statusCode": 401,
-	"message": "You are not the owner of this content",
-	"error": "Unauthorized"
+  "statusCode": 401,
+  "message": "You are not the owner of this content",
+  "error": "Unauthorized"
 }
 ```
 
 Email já cadastrado:
 
 `PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 409`
+
 ```json
 {
-	"statusCode": 409,
-	"message": "User already exists",
-	"error": "Conflict"
+  "statusCode": 409,
+  "message": "User already exists",
+  "error": "Conflict"
 }
 ```
 
 ## Excluir usuário
+
 `DELETE /customers/ID - PARÂMETRO DA REQUISIÇÃO`
+
 ```json
 É necessario enviar um ID de usuário válido como parâmetro da requisição.
 Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ```
 
 `DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 204`
+
 ```json
 Não retornará nada na resposta.
 ```
@@ -297,21 +325,268 @@ Não retornará nada na resposta.
 ID inválido:
 
 `DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+
 ```json
 {
-	"statusCode": 404,
-	"message": "User not found",
-	"error": "Not Found"
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
 }
 ```
 
 Conteúdo de outro usuário:
 
 `DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 401`
+
 ```json
 {
-	"statusCode": 401,
-	"message": "You are not the owner of this content",
-	"error": "Unauthorized"
+  "statusCode": 401,
+  "message": "You are not the owner of this content",
+  "error": "Unauthorized"
 }
 ```
+
+<h2 align=center>CRUD de Contato</h2>
+
+## Rotas autênticadas e dono do conteúdo
+
+Rotas que requerem autenticação devem incluir o campo "Authorization" no cabeçalho da requisição, como demonstrado no seguinte exemplo:
+
+```json
+Authorization: Bearer {token}
+```
+
+Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o seguinte erro:
+
+```json
+{
+  "statusCode": 401,
+  "message": "Unauthorized"
+}
+```
+
+## Cadastro de contato
+
+`POST /contacts - CORPO DA REQUISIÇÃO`
+
+```json
+{
+  "fullName": "Contact Named One",
+  "email": "contactone@mail.com",
+  "phoneNumber": "(21) 90000-0000"
+}
+```
+
+Chaves extras não serão validadas pelo sistema.
+
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 201`
+
+```json
+{
+  "id": "bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5",
+  "fullName": "Contact Named One",
+  "email": "contactone@mail.com",
+  "phoneNumber": "(21) 90000-0000",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "customerId": "99761784-5e9f-4762-ab2b-72477705d159"
+}
+```
+
+## Possíveis erros
+
+Email já cadastrado:
+
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 409`
+
+```json
+{
+  "statusCode": 409,
+  "message": "User already exists",
+  "error": "Conflict"
+}
+```
+
+Campo obrigatório faltando (faltando o email no exemplo):
+
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 400`
+
+```json
+{
+  "statusCode": 400,
+  "message": ["email should not be empty", "email must be an email"],
+  "error": "Bad Request"
+}
+```
+
+## Buscar todos os contatos
+
+`GET /contacts - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+[
+	{
+		"id": "bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5",
+		"fullName": "Contact Named One",
+		"email": "contactone@mail.com",
+		"phoneNumber": "(21) 90000-0000",
+		"registrationDate": "2023-06-01T03:00:00.000Z",
+		"customerId": "99761784-5e9f-4762-ab2b-72477705d159"
+	},
+	{
+		"id": "491796ec-717c-4abd-bbf4-65bae6bf3fdc",
+		"fullName": "Contact Named Two",
+		"email": "contacttwo@mail.com",
+		"phoneNumber": "(21) 90000-0000",
+		"registrationDate": "2023-06-01T03:00:00.000Z",
+		"customerId": "99761784-5e9f-4762-ab2b-72477705d159"
+	},
+	...
+]
+```
+
+## Buscar um único contato
+
+`GET /contacts/ID - PARÂMETRO DA REQUISIÇÃO`
+
+```json
+É necessario enviar um ID de contato válido como parâmetro da requisição.
+Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
+```
+
+`GET /contacts/ID - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+{
+  "id": "bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5",
+  "fullName": "Contact Named One",
+  "email": "contactone@mail.com",
+  "phoneNumber": "(21) 90000-0000",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "customerId": "99761784-5e9f-4762-ab2b-72477705d159"
+}
+```
+
+## Possíveis erros
+
+ID inválido:
+
+`POST /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+
+```json
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
+}
+```
+
+## Editar contato
+
+`PATCH /contacts/ID - PARÂMETRO DA REQUISIÇÃO E CORPO DA REQUISIÇÃO`
+
+```json
+É necessario enviar um ID de contato válido como parâmetro da requisição.
+Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
+```
+
+```json
+{
+  "email": "contactnewone@mail.com"
+  // Pode ser enviado quantos campos quiser
+  // Tem que ser enviado ao menos um dos campos
+}
+```
+
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+{
+  "id": "bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5",
+  "fullName": "Contact Named One",
+  "email": "contactnewone@mail.com",
+  "phoneNumber": "(21) 90000-0000",
+  "registrationDate": "2023-06-01T03:00:00.000Z",
+  "customerId": "99761784-5e9f-4762-ab2b-72477705d159"
+}
+```
+
+## Possíveis erros
+
+ID inválido:
+
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+
+```json
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
+}
+```
+
+Conteúdo de outro usuário:
+
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 401`
+
+```json
+{
+  "statusCode": 401,
+  "message": "You are not the owner of this content",
+  "error": "Unauthorized"
+}
+```
+
+Email já cadastrado:
+
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 409`
+
+```json
+{
+  "statusCode": 409,
+  "message": "User already exists",
+  "error": "Conflict"
+}
+```
+
+## Excluir contato
+
+`DELETE /contacts/ID - PARÂMETRO DA REQUISIÇÃO`
+
+```json
+É necessario enviar um ID de contato válido como parâmetro da requisição.
+Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
+```
+
+`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 204`
+
+```json
+Não retornará nada na resposta.
+```
+
+## Possíveis erros
+
+ID inválido:
+
+`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+
+```json
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "error": "Not Found"
+}
+```
+
+Conteúdo de outro usuário:
+
+`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 401`
+
+```json
+{
+  "statusCode": 401,
+  "message": "You are not the owner of this content",
+  "error": "Unauthorized"
+}
+```
+
+Feito com amor por Diego de Lima Almeida, aluno da T14 da Kenzie Academy Brasil. :)
