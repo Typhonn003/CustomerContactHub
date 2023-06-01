@@ -41,16 +41,19 @@ export class CustomersController {
   }
 
   @Patch(':customer_id')
+  @UseGuards(JwtAuthGuard)
   update(
     @Param('customer_id') customer_id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
+    @Request() req,
   ) {
-    return this.customersService.update(customer_id, updateCustomerDto);
+    return this.customersService.update(customer_id, updateCustomerDto, req.user.id);
   }
 
   @HttpCode(204)
   @Delete(':customer_id')
-  remove(@Param('customer_id') customer_id: string) {
-    return this.customersService.remove(customer_id);
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('customer_id') customer_id: string, @Request() req) {
+    return this.customersService.remove(customer_id, req.user.id);
   }
 }

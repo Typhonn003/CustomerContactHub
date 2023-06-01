@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -45,10 +46,25 @@ export class CustomersService {
     return customer;
   }
 
-  async update(customer_id: string, updateCustomerDto: UpdateCustomerDto) {
+  isOwner(customer_id: string, token_customer_id: string): boolean {
+    if (customer_id === token_customer_id) {
+      return true;
+    }
+    return false;
+  }
+
+  async update(
+    customer_id: string,
+    updateCustomerDto: UpdateCustomerDto,
+    token_customer_id: string,
+  ) {
     const findUser = await this.customersRepository.findOne(customer_id);
     if (!findUser) {
       throw new NotFoundException('User not found');
+    }
+    const isOwner = await this.isOwner(customer_id, token_customer_id);
+    if (!isOwner) {
+      throw new UnauthorizedException('You are not the owner of this content');
     }
     if (updateCustomerDto.email && updateCustomerDto.email !== findUser.email) {
       const findEmail = await this.customersRepository.findEmail(
@@ -65,10 +81,14 @@ export class CustomersService {
     return customer;
   }
 
-  async remove(customer_id: string) {
+  async remove(customer_id: string, token_customer_id: string) {
     const findUser = await this.customersRepository.findOne(customer_id);
     if (!findUser) {
       throw new NotFoundException('User not found');
+    }
+    const isOwner = await this.isOwner(customer_id, token_customer_id);
+    if (!isOwner) {
+      throw new UnauthorizedException('You are not the owner of this content');
     }
     await this.customersRepository.delete(customer_id);
   }
