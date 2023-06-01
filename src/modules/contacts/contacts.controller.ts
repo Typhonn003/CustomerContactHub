@@ -26,8 +26,8 @@ export class ContactsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findAll(@Request() req) {
-    return this.contactsService.findAll(req.user.id);
+  findAll() {
+    return this.contactsService.findAll();
   }
 
   @Get(':contact_id')
