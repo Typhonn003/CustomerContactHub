@@ -62,7 +62,7 @@ export class CustomersService {
     if (!findUser) {
       throw new NotFoundException('User not found');
     }
-    const isOwner = await this.isOwner(customer_id, token_customer_id);
+    const isOwner = this.isOwner(customer_id, token_customer_id);
     if (!isOwner) {
       throw new UnauthorizedException('You are not the owner of this content');
     }
@@ -86,7 +86,7 @@ export class CustomersService {
     if (!findUser) {
       throw new NotFoundException('User not found');
     }
-    const isOwner = await this.isOwner(customer_id, token_customer_id);
+    const isOwner = this.isOwner(customer_id, token_customer_id);
     if (!isOwner) {
       throw new UnauthorizedException('You are not the owner of this content');
     }
