@@ -26,8 +26,8 @@ export class ContactsService {
     return contact;
   }
 
-  async findAll(customerId: string) {
-    const contacts = await this.contactsRepository.findAll(customerId);
+  async findAll() {
+    const contacts = await this.contactsRepository.findAll();
     return contacts;
   }
 
