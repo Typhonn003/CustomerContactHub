@@ -76,7 +76,7 @@ Caso queira encerrar o servidor, aperte as teclas CTRL+C no terminal.
 
 Chaves extras não serão validadas pelo sistema.
 
-`POST /customers - FORMATO DA RESPOSTA - STATUS 201`
+`POST /customers - FORMATO DA RESPOSTA - STATUS 201 CREATED`
 
 ```json
 {
@@ -92,7 +92,7 @@ Chaves extras não serão validadas pelo sistema.
 
 Email já cadastrado:
 
-`POST /customers - FORMATO DA RESPOSTA - STATUS 409`
+`POST /customers - FORMATO DA RESPOSTA - STATUS 409 CONFLICT`
 
 ```json
 {
@@ -104,7 +104,7 @@ Email já cadastrado:
 
 Campo obrigatório faltando (faltando o email no exemplo):
 
-`POST /customers - FORMATO DA RESPOSTA - STATUS 400`
+`POST /customers - FORMATO DA RESPOSTA - STATUS 400 BAD REQUEST`
 
 ```json
 {
@@ -125,7 +125,7 @@ Campo obrigatório faltando (faltando o email no exemplo):
 }
 ```
 
-`POST /login - FORMATO DA RESPOSTA - STATUS 200`
+`POST /login - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -137,7 +137,7 @@ Campo obrigatório faltando (faltando o email no exemplo):
 
 Email ou senha inválida:
 
-`POST /login - FORMATO DA RESPOSTA - STATUS 401`
+`POST /login - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
@@ -149,7 +149,7 @@ Email ou senha inválida:
 
 ## Buscar todos os usuários
 
-`GET /customers - FORMATO DA RESPOSTA - STATUS 200`
+`GET /customers - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 [
@@ -180,7 +180,7 @@ Email ou senha inválida:
 Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ```
 
-`GET /customers/ID - FORMATO DA RESPOSTA - STATUS 200`
+`GET /customers/ID - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -196,7 +196,7 @@ Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 
 ID inválido:
 
-`POST /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+`POST /customers/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
@@ -216,6 +216,8 @@ Authorization: Bearer {token}
 
 Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o seguinte erro:
 
+`FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
+
 ```json
 {
   "statusCode": 401,
@@ -225,7 +227,7 @@ Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o s
 
 ## Buscar perfil do usuário logado
 
-`GET /customers/profile - FORMATO DA RESPOSTA - STATUS 200`
+`GET /customers/profile - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -250,12 +252,12 @@ Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 ```json
 {
   "fullName": "Just One"
-  // Pode ser enviado quantos campos quiser
+  // Você pode enviar quantos campos quiser
   // Tem que ser enviado ao menos um dos campos
 }
 ```
 
-`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -271,7 +273,7 @@ Exemplo: "/customers/99761784-5e9f-4762-ab2b-72477705d159"
 
 ID inválido:
 
-`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
@@ -283,7 +285,7 @@ ID inválido:
 
 Conteúdo de outro usuário:
 
-`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 401`
+`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
@@ -295,7 +297,7 @@ Conteúdo de outro usuário:
 
 Email já cadastrado:
 
-`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 409`
+`PATCH /customers/ID - FORMATO DA RESPOSTA - STATUS 409 CONFLICT`
 
 ```json
 {
@@ -324,7 +326,7 @@ Não retornará nada na resposta.
 
 ID inválido:
 
-`DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 404`
+`DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
@@ -336,7 +338,7 @@ ID inválido:
 
 Conteúdo de outro usuário:
 
-`DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 401`
+`DELETE /customers/ID - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
@@ -357,6 +359,8 @@ Authorization: Bearer {token}
 ```
 
 Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o seguinte erro:
+
+`FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
@@ -379,7 +383,7 @@ Caso seja feita alguma requisição nessa rota sem estar autênticado, terá o s
 
 Chaves extras não serão validadas pelo sistema.
 
-`POST /contacts - FORMATO DA RESPOSTA - STATUS 201`
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 201 CREATED`
 
 ```json
 {
@@ -396,7 +400,7 @@ Chaves extras não serão validadas pelo sistema.
 
 Email já cadastrado:
 
-`POST /contacts - FORMATO DA RESPOSTA - STATUS 409`
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 409 CONFLICT`
 
 ```json
 {
@@ -408,7 +412,7 @@ Email já cadastrado:
 
 Campo obrigatório faltando (faltando o email no exemplo):
 
-`POST /contacts - FORMATO DA RESPOSTA - STATUS 400`
+`POST /contacts - FORMATO DA RESPOSTA - STATUS 400 BAD REQUEST`
 
 ```json
 {
@@ -420,7 +424,7 @@ Campo obrigatório faltando (faltando o email no exemplo):
 
 ## Buscar todos os contatos
 
-`GET /contacts - FORMATO DA RESPOSTA - STATUS 200`
+`GET /contacts - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 [
@@ -453,7 +457,7 @@ Campo obrigatório faltando (faltando o email no exemplo):
 Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
 ```
 
-`GET /contacts/ID - FORMATO DA RESPOSTA - STATUS 200`
+`GET /contacts/ID - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -470,13 +474,25 @@ Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
 
 ID inválido:
 
-`POST /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+`POST /contacts/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
   "statusCode": 404,
   "message": "User not found",
   "error": "Not Found"
+}
+```
+
+Contato de outro usuário:
+
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
+
+```json
+{
+  "statusCode": 401,
+  "message": "You are not the owner of this contact",
+  "error": "Unauthorized"
 }
 ```
 
@@ -492,12 +508,12 @@ Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
 ```json
 {
   "email": "contactnewone@mail.com"
-  // Pode ser enviado quantos campos quiser
+  // Você pode enviar quantos campos quiser
   // Tem que ser enviado ao menos um dos campos
 }
 ```
 
-`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 200`
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 200 OK`
 
 ```json
 {
@@ -514,7 +530,7 @@ Exemplo: "/contacts/bb8b8ba5-119c-4176-a33e-b6d7ff30c7b5"
 
 ID inválido:
 
-`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
@@ -524,21 +540,21 @@ ID inválido:
 }
 ```
 
-Conteúdo de outro usuário:
+Contato de outro usuário:
 
-`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 401`
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
   "statusCode": 401,
-  "message": "You are not the owner of this content",
+  "message": "You are not the owner of this contact",
   "error": "Unauthorized"
 }
 ```
 
 Email já cadastrado:
 
-`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 409`
+`PATCH /contacts/ID - FORMATO DA RESPOSTA - STATUS 409 CONFLICT`
 
 ```json
 {
@@ -567,7 +583,7 @@ Não retornará nada na resposta.
 
 ID inválido:
 
-`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 404`
+`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 404 NOT FOUND`
 
 ```json
 {
@@ -577,14 +593,14 @@ ID inválido:
 }
 ```
 
-Conteúdo de outro usuário:
+Contato de outro usuário:
 
-`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 401`
+`DELETE /contacts/ID - FORMATO DA RESPOSTA - STATUS 401 UNAUTHORIZED`
 
 ```json
 {
   "statusCode": 401,
-  "message": "You are not the owner of this content",
+  "message": "You are not the owner of this contact",
   "error": "Unauthorized"
 }
 ```
