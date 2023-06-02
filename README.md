@@ -59,6 +59,10 @@ Caso queira encerrar o servidor, aperte as teclas CTRL+C no terminal.
 
 # Documentação
 
+<a href="https://insomnia.rest/run/?label=HubLinkup_back&uri=https%3A%2F%2Fgithub.com%2FTyphonn003%2FHubLinkup_back%2Fblob%2Fdevelop%2FInsomnia_HubLinkup_back.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+
+Para importar o JSON no Insomnia, basta clicar no botão "Run in Insomnia" e seguir os passos fornecidos para importar todos os endpoints para o seu ambiente do Insomnia. Dentro do Insomnia, certifique-se de trocar do modo "Design" para o modo "Debug" no topo da tela.
+
 <h2 align=center>CRUD de Usuário</h2>
 
 ## Cadastro de usuário
