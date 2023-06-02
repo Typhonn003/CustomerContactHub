@@ -55,6 +55,10 @@ Se você estiver usando Yarn, execute o seguinte comando no diretório raiz do p
 yarn start run:dev
 ```
 
+```
+O servidor irá rodar em: http://localhost:3000/
+```
+
 Caso queira encerrar o servidor, aperte as teclas CTRL+C no terminal.
 
 # Documentação
